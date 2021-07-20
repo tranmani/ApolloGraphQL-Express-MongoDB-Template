@@ -42,7 +42,7 @@ export default {
       throw new UserInputError("Last name is required!");
     }
 
-    const salt = bcrypt.genSaltSync(10);
+    const salt = await bcrypt.genSaltSync(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     const user: any = new UserModel(
       {
@@ -123,10 +123,10 @@ export default {
     // Check old password, if right then hash new password
     let hashedPassword: string;
     if (oldPassword && newPassword) {
-      const passwordIsValid = bcrypt.compareSync(oldPassword, user.password);
+      const passwordIsValid = await bcrypt.compareSync(oldPassword, user.password);
       if (!passwordIsValid) return "Old password incorrect";
 
-      const salt = bcrypt.genSaltSync(10);
+      const salt = await bcrypt.genSaltSync(10);
       hashedPassword = await bcrypt.hash(newPassword, salt);
     }
 
