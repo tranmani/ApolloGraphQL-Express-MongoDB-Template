@@ -126,7 +126,8 @@ export default {
       const passwordIsValid = bcrypt.compareSync(oldPassword, user.password);
       if (!passwordIsValid) return "Old password incorrect";
 
-      hashedPassword = await bcrypt.hash(newPassword, 10);
+      const salt = bcrypt.genSaltSync(10);
+      hashedPassword = await bcrypt.hash(newPassword, salt);
     }
 
     // Update user profile
