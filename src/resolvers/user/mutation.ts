@@ -124,7 +124,7 @@ export default {
     let hashedPassword: string;
     if (oldPassword && newPassword) {
       const passwordIsValid = await bcrypt.compareSync(oldPassword, user.password);
-      if (!passwordIsValid) return "Old password incorrect";
+      if (!passwordIsValid) return new UserInputError("Old password incorrect");
 
       const salt = await bcrypt.genSaltSync(10);
       hashedPassword = await bcrypt.hash(newPassword, salt);
